@@ -1,4 +1,5 @@
 module.exports = {
+	"globals": { "module": true },
 	"root": true,
 	"extends": [
 		"plugin:vue/essential",
