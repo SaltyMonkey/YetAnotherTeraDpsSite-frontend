@@ -6,6 +6,7 @@ module.exports = {
 		"eslint:recommended"
 	],
 	"rules": {
+		"no-console": "off",
 		"arrow-spacing": ["warn"],
 		"init-declarations": ["error", "always"],
 		"no-duplicate-imports": [
@@ -36,10 +37,6 @@ module.exports = {
 			"error"
 		],
 		"prefer-object-spread": [ "warn"],
-		"indent": [
-			"warn",
-			"tab"
-		],
 		"quotes": [
 			"error",
 			"double"
