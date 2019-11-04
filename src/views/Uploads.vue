@@ -4,7 +4,7 @@
             <Header transition="fade-transition" :region="region"/>
         </v-row>
         <v-row>
-            <RecentUploads/>
+            <RecentUploads :region="region"/>
 <!--            <PerPlayerStats/>-->
         </v-row>
     </v-container>
