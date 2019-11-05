@@ -102,7 +102,8 @@ module.exports = {
 		],
 		"yoda" : [
 			"error"
-		]
+		],
+		"no-mixed-spaces-and-tabs": "off"
 	},
 	"parserOptions": {
 		"parser": "babel-eslint",

@@ -7,29 +7,32 @@
                     <th class="text-center">Party</th>
                     <th class="text-center">Dungeon</th>
                     <th class="text-center">Party DPS</th>
-                    <th class="text-center">Duration</th>
+                    <th class="text-center">Fight Duration</th>
                     <th class="text-center">Uploaded</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in recentUploads" :key="item">
+                <tr v-for="upload in recentUploads" :key="upload">
                     <td class="text-center">
-                        <v-tooltip v-for="player in item.players" :key="player" top>
+                        <v-tooltip color="rgba(48, 48, 48, 1)" content-class="tooltip" v-for="player in upload.players"
+                                   :key="player" top>
                             <template v-slot:activator="{ on }">
-                                <img :src="'https://storage.googleapis.com/moongourd/resources/class-icons-t/' + player.class.charAt(0).toUpperCase() + player.class.slice(1) + '.svg'"
-                                     v-on="on"/>
+                                <img :src="'https://raw.githubusercontent.com/neowutran/TeraDpsMeterData/master/class-icons/' + player.class + '.png'"
+                                     v-on="on" class="class-icon"/>
                             </template>
-                            <span>{{ player.name }}<br>{{ player.serverName }} - {{ player.guildName }}<br>{{ player.dps }} DPS</span>
+                            <span>{{ player.name }}<br>{{ player.serverName }}<br>{{ player.dps }} DPS</span>
                         </v-tooltip>
                     </td>
                     <td class="text-center">
-                        <v-btn class="btn-clear" text :to="region + item.url">{{ item.dungeon.id }}<br>{{
-                            item.dungeon.boss }}
+                        <v-btn class="btn-clear" text
+                               :to="region + '/run/' + upload.id">
+                            {{ upload.dungeon.name }}<br>
+                            {{ upload.dungeon.boss.name }}
                         </v-btn>
                     </td>
-                    <td class="text-center">{{ item.partyDps }}</td>
-                    <td class="text-center">{{ item.duration }}</td>
-                    <td class="text-center">{{ item.uploaded }}</td>
+                    <td class="text-center">{{ upload.partyDps }}</td>
+                    <td class="text-center">{{ upload.fightDuration }}</td>
+                    <td class="text-center">{{ upload.uploaded }}</td>
                 </tr>
                 </tbody>
             </template>
@@ -45,21 +48,43 @@
     .btn-clear > span {
         font-weight: normal;
     }
+
+    .class-icon {
+        color: #fafafa;
+        border-spacing: 0;
+        border-collapse: collapse;
+        max-width: 100%;
+        border: 0;
+        vertical-align: middle;
+        background-color: #303030;
+        margin: 5px 5px 5px 0;
+        height: 48px;
+        widht: 48px;
+    }
+
+    .tooltip {
+        border: 1px solid #616161 !important;
+        border-radius: unset;
+    }
+
+    .tooltip span {
+        text-align: center;
+        border-radius: unset;
+    }
 </style>
 
 <script>
 	function formatDPS(dps) {
-		// eslint-disable-next-line no-mixed-spaces-and-tabs
 		return dps.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 	}
 
 	function formatDuration(duration) {
 		let minutes = Math.floor(duration / 60);
 		let seconds = duration - minutes * 60;
-		return `${str_pad_left(minutes, "0", 2)}:${str_pad_left(seconds, "0", 2)}`;
+		return `${padTime(minutes, "0", 2)}:${padTime(seconds, "0", 2)}`;
 	}
 
-	function str_pad_left(string, pad, length) {
+	function padTime(string, pad, length) {
 		return (new Array(length + 1).join(pad) + string).slice(-length);
 	}
 
@@ -71,77 +96,50 @@
 			return {
 				"recentUploads": [
 					{
-						// eslint-disable-next-line no-mixed-spaces-and-tabs
+						"id": "f3d47250da5f",
 						"players": {
 							0: {
 								"class": "lancer",
-								"name": "Lancer",
-								"guildName": "uwu",
+								"name": "PlayerName1",
 								"serverName": "Mystel",
 								"dps": formatDPS(95000000)
 							},
 							1: {
 								"class": "mystic",
-								"name": "Mystic",
-								"guildName": "uwu",
+								"name": "PlayerName2",
 								"serverName": "Seren",
 								"dps": formatDPS(95000000)
 							},
 							2: {
 								"class": "valkyrie",
-								"name": "Valkyrie",
-								"guildName": "uwu",
+								"name": "PlayerName3",
 								"serverName": "Yurian",
 								"dps": formatDPS(95000000)
 							},
 							3: {
 								"class": "archer",
-								"name": "Archer",
-								"guildName": "uwu",
+								"name": "PlayerName4",
 								"serverName": "Mystel",
 								"dps": formatDPS(95000000)
 							},
 							4: {
 								"class": "berserker",
-								"name": "Zerk",
-								"guildName": "uwu",
+								"name": "PlayerName5",
 								"serverName": "Killian",
 								"dps": formatDPS(95000000)
 							}
 						},
 						"dungeon": {
-							"id": "Akalath Quarantine",
-							"boss": "Akalath Travan"
+							"id": 3023,
+							"name": "Akalath Quarantine",
+							"boss": {
+								"id": 1000,
+								"name": "Akalath Travan"
+							}
 						},
 						"partyDps": formatDPS(133742069),
-						"duration": formatDuration(574),
-						"uploaded": new Date(),
-						"url": "/run?id=f3d47250da5f"
-					},
-					{
-						// eslint-disable-next-line no-mixed-spaces-and-tabs
-						"classes": ["brawler", "mystic", "berserker", "gunner", "reaper"],
-						"dungeon": {
-							"id": 3023,
-							"boss": 2000
-						},
-						"partyDps": formatDPS(999999999),
-						"duration": formatDuration(2),
-						"uploaded": new Date(),
-						"url": "/run?id=f9fee8666ca6"
-					}
-					,
-					{
-						// eslint-disable-next-line no-mixed-spaces-and-tabs
-						"classes": ["lancer", "lancer", "lancer", "lancer", "lancer"],
-						"dungeon": {
-							"id": 3023,
-							"boss": 2000
-						},
-						"partyDps": formatDPS(999999999),
-						"duration": formatDuration(1),
-						"uploaded": new Date(),
-						"url": "/run?id=20af30ad26b4"
+						"fightDuration": formatDuration(1262),
+						"uploaded": new Date().toLocaleString()
 					}
 				]
 			};
