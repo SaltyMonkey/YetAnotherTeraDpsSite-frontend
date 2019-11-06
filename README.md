@@ -1,5 +1,7 @@
 # frontend
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SaltyMonkey/YetAnotherTeraDpsSite-frontend.svg)](https://greenkeeper.io/)
+
 ## Project setup
 ```
 npm install
