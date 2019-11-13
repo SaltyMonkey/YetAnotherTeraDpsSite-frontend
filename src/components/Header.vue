@@ -15,19 +15,6 @@
                     </v-list>
                 </v-menu>
                 <v-btn class="ma-2" text to="/">Rankings</v-btn>
-                <v-menu text offset-y>
-                    <template v-slot:activator="{ on }">
-                        <v-btn text v-on="on">
-                            Stats
-                        </v-btn>
-                    </template>
-
-                    <v-list>
-                        <v-list-item v-for="(item, index) in items" :key="index" @click="1">
-                            <v-list-item-title>{{ item.title }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
                 <v-btn class="ma-2" text to="/">Search</v-btn>
 
             </v-layout>
@@ -47,10 +34,16 @@
 		"name": "header",
 		"data": () => ({
 			"items": [{
-				"title": "Recent"
+				"title": "Recent all"
 			},
 				{
-					"title": "My uploads"
+					"title": "Recent"
+                },
+                {
+					"title": "Recent by class"
+                },
+                {
+					"title": "Recent by area"
 				},
 				{
 					"title": "Wall of Shame"
